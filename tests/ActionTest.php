@@ -1,8 +1,7 @@
 <?php
 
-namespace EventyTests\Unit;
+namespace EventyClassic\Tests;
 
-use EventyTests\DummyClass;
 use PHPUnit\Framework\TestCase;
 use EventyClassic\Events;
 
@@ -33,12 +32,8 @@ class ActionTest extends TestCase
      */
     public function testCanHookArray()
     {
-        $class = new class('DummyClass') {
-            public function write()
-            {
-                echo 'Action Fired, Baby!';
-            }
-        };
+        $class = new DummyClass;
+
         $this->events->addAction('my_amazing_action', [$class, 'write']);
         $this->expectOutputString('Action Fired, Baby!');
         $this->events->runAction('my_amazing_action');

@@ -1,8 +1,7 @@
 <?php
 
-namespace EventyTests\Unit;
+namespace EventyClassic\Tests;
 
-use EventyTests\DummyClass;
 use PHPUnit\Framework\TestCase;
 use EventyClassic\Events;
 
@@ -32,12 +31,8 @@ class FilterTest extends TestCase
      */
     public function testCanHookArray()
     {
-        $class = new class('DummyClass') {
-            public function filter($value)
-            {
-                return $value.' Filtered';
-            }
-        };
+        $class = new DummyClass;
+
         $this->events->addFilter('my_amazing_filter', [$class, 'filter']);
 
         $this->assertEquals($this->events->runFilter('my_amazing_filter', 'Value Was'), 'Value Was Filtered');
