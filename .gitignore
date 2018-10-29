@@ -1,1 +1,43 @@
-vendor/
+# IDE & System related files
+Desktop.ini
+Thumbs.db
+.DS_Store
+.buildpath
+.idea
+.project
+.settings
+.vscode
+
+# Composer dependencies
+/vendor/
+
+# Builds
+/build/
+/dist/
+
+# Logs
+/logs/*
+
+# PHAR files
+*.phar
+
+# Composer lock file
+composer.lock
+
+# PHPUnit configuration
+phpunit.xml
+
+# PHP CodeSniffer configuration
+phpcs.xml
+
+# phpDocumentor configuration
+phpdoc.xml
+
+# Box configuration
+box.json
+
+# Dotenv files
+.env
+
+# Not ignore .gitkeep files
+!.gitkeep
