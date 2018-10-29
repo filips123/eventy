@@ -92,16 +92,30 @@ abstract class Event
     {
         $listeners = $this->listeners;
 
+        if (count($listeners) == 0) {
+            return [];
+        }
+
+        reset($listeners);
+        $key = key($listeners);
+
+        $same = true;
+        $previous = $listeners[$key];
+        foreach ($listeners as $listener) {
+            if ($previous['priority'] != $listener['priority']) {
+                $same = false;
+                break;
+            }
+        }
+
+        if ($same) {
+            return $listeners;
+        }
+
         usort(
             $listeners,
             function ($a, $b) {
-                // @codeCoverageIgnoreStart
-                if (version_compare(PHP_VERSION, '7.0.0', '<')) {
-                    return ($b['priority'] - $a['priority']);
-                } else {
-                    return ($a['priority'] - $b['priority']);
-                }
-                // @codeCoverageIgnoreEnd
+                return ($a['priority'] - $b['priority']);
             }
         );
 
