@@ -1,39 +1,43 @@
 <?php
 
-namespace TorMorten\Eventy;
+namespace EventyClassic;
 
 class Events
 {
 
     /**
-     * Holds all registered actions
+     * Holds all registered actions.
+     *
      * @var Action
      */
     protected $action;
 
     /**
-     * Holds all registered filters
+     * Holds all registered filters.
+     *
      * @var Filter
      */
     protected $filter;
 
     /**
-     * Construct the class
+     * Constructs the class.
+     *
      * @param null|Action $action
      * @param null|Filter $filter
      */
-    public function __construct(?Action $action = null, ?Filter $filter = null)
+    public function __construct(Action $action = null, Filter $filter = null)
     {
         if (!$action) {
-            $this->action = new Action();
+            $this->action = new Action;
         }
         if (!$filter) {
-            $this->filter = new Filter();
+            $this->filter = new Filter;
         }
     }
 
     /**
-     * Get the action instance
+     * Gets the action instance.
+     *
      * @return Action
      */
     public function getAction()
@@ -43,7 +47,8 @@ class Events
 
 
     /**
-     * Get the action instance
+     * Gets the action instance.
+     *
      * @return Filter
      */
     public function getFilter()
@@ -52,11 +57,12 @@ class Events
     }
 
     /**
-     * Add an action
-     * @param string $hook Hook name
-     * @param mixed $callback Function to execute
-     * @param integer $priority Priority of the action
-     * @param integer $arguments Number of arguments to accept
+     * Adds an action.
+     *
+     * @param string  $hook      Hook name.
+     * @param mixed   $callback  Function to execute.
+     * @param integer $priority  Priority of the action.
+     * @param integer $arguments Number of arguments to accept.
      *
      * @return Events
      */
@@ -68,11 +74,34 @@ class Events
     }
 
     /**
-     * Adds a filter
-     * @param string $hook Hook name
-     * @param mixed $callback Function to execute
-     * @param integer $priority Priority of the action
-     * @param integer $arguments Number of arguments to accept
+     * Removes an action.
+     *
+     * @param string $hook Hook name.
+     * @param mixed $callback Function to execute.
+     * @param int $priority Priority of the action.
+     */
+    public function removeAction($hook, $callback, $priority = 20)
+    {
+        $this->action->remove($hook, $callback, $priority);
+    }
+
+    /**
+     * Removes all actions.
+     *
+     * @param string $hook Hook name.
+     */
+    public function removeAllActions($hook = null)
+    {
+        $this->action->removeAll($hook);
+    }
+
+    /**
+     * Adds a filter.
+     *
+     * @param string  $hook      Hook name.
+     * @param mixed   $callback  Function to execute.
+     * @param integer $priority  Priority of the action.
+     * @param integer $arguments Number of arguments to accept.
      *
      * @return Events
      */
@@ -84,11 +113,11 @@ class Events
     }
 
     /**
-     * Remove a filter.
+     * Removes a filter.
      *
-     * @param string $hook Hook name
-     * @param mixed $callback Function to execute
-     * @param int $priority Priority of the action
+     * @param string $hook     Hook name.
+     * @param mixed  $callback Function to execute.
+     * @param int    $priority Priority of the action.
      */
     public function removeFilter($hook, $callback, $priority = 20)
     {
@@ -96,7 +125,7 @@ class Events
     }
 
     /**
-     * Remove all filters.
+     * Removes all filters.
      *
      * @param string $hook Hook name
      */
@@ -106,63 +135,39 @@ class Events
     }
 
     /**
-     * Remove a action.
-     *
-     * @param string $hook Hook name
-     * @param mixed $callback Function to execute
-     * @param int $priority Priority of the action
-     */
-    public function removeAction($hook, $callback, $priority = 20)
-    {
-        $this->action->remove($hook, $callback, $priority);
-    }
-
-    /**
-     * Remove all actions.
-     *
-     * @param string $hook Hook name
-     */
-    public function removeAllActions($hook = null)
-    {
-        $this->action->removeAll($hook);
-    }
-
-    /**
-     * Set a new action
+     * Runs an action.
      *
      * Actions never return anything. It is merely a way of executing code at a specific time in your code.
-     *
      * You can add as many parameters as you'd like.
      *
      * @param array ...$args First argument will be the name of the hook, and the rest will be args for the hook.
      *
      * @return void
      */
-    public function action(...$args)
+    public function runAction(...$args)
     {
         $hook = $this->createHook($args);
         $this->action->fire($hook->name, $hook->args);
     }
 
     /**
-     * Set a new filter
+     * Runs a filter.
      *
      * Filters should always return something. The first parameter will always be the default value.
-     *
      * You can add as many parameters as you'd like.
      *
      * @param array ...$args First argument will be the name of the hook, and the rest will be args for the hook.
      *
      * @return mixed
      */
-    public function filter(...$args)
+    public function runFilter(...$args)
     {
         $hook = $this->createHook($args);
         return $this->filter->fire($hook->name, $hook->args);
     }
 
     /**
-     * Figures out the hook
+     * Figures out the hook.
      *
      * Will return an object with two keys. One for the name and one for the arguments that will be
      * passed to the hook itself.
