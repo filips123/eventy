@@ -28,7 +28,7 @@ class Filter extends Event
         if ($this->getListeners()) {
             $listeners = $this->getListeners();
 
-            foreach($listeners as $listener) {
+            foreach ($listeners as $listener) {
                 if ($listener['hook'] == $action) {
                     $parameters = [];
                     $args[0] = $this->value;

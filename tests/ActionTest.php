@@ -18,9 +18,12 @@ class ActionTest extends TestCase
      */
     public function testCanHookCallable()
     {
-        $this->events->addAction('my_awesome_action', function () {
-            echo 'Action Fired, Baby!';
-        });
+        $this->events->addAction(
+            'my_awesome_action',
+            function () {
+                echo 'Action Fired, Baby!';
+            }
+        );
         $this->expectOutputString('Action Fired, Baby!');
         $this->events->runAction('my_awesome_action');
     }
@@ -58,9 +61,13 @@ class ActionTest extends TestCase
      */
     public function testHookWithPArameters()
     {
-        $this->events->addAction('my_great_action', function (...$args) {
-            echo 'Hello, ' . $args[0] . '!';
-        }, 20);
+        $this->events->addAction(
+            'my_great_action',
+            function (...$args) {
+                echo 'Hello, ' . $args[0] . '!';
+            },
+            20
+        );
 
         $this->expectOutputString('Hello, World!');
         $this->events->runAction('my_great_action', 'World');
@@ -71,13 +78,21 @@ class ActionTest extends TestCase
      */
     public function testHookFiresWhenTwoListnersHaveSamePriority()
     {
-        $this->events->addAction('my_great_action', function () {
-            echo 'Action Fired, Baby!';
-        }, 20);
+        $this->events->addAction(
+            'my_great_action',
+            function () {
+                echo 'Action Fired, Baby!';
+            },
+            20
+        );
 
-        $this->events->addAction('my_great_action', function () {
-            echo 'Action Fired Again, Baby!';
-        }, 20);
+        $this->events->addAction(
+            'my_great_action',
+            function () {
+                echo 'Action Fired Again, Baby!';
+            },
+            20
+        );
 
         $this->expectOutputString('Action Fired, Baby!Action Fired Again, Baby!');
 
@@ -89,21 +104,37 @@ class ActionTest extends TestCase
      */
     public function testsListnersAreSortedByPriority()
     {
-        $this->events->addAction('my_great_action', function () {
-            echo 'Action Fired, Baby!';
-        }, 20);
+        $this->events->addAction(
+            'my_great_action',
+            function () {
+                echo 'Action Fired, Baby!';
+            },
+            20
+        );
 
-        $this->events->addAction('my_great_action', function () {
-            echo 'Action Fired, Baby!';
-        }, 12);
+        $this->events->addAction(
+            'my_great_action',
+            function () {
+                echo 'Action Fired, Baby!';
+            },
+            12
+        );
 
-        $this->events->addAction('my_great_action', function () {
-            echo 'Action Fired, Baby!';
-        }, 8);
+        $this->events->addAction(
+            'my_great_action',
+            function () {
+                echo 'Action Fired, Baby!';
+            },
+            8
+        );
 
-        $this->events->addAction('my_great_action', function () {
-            echo 'Action Fired, Baby!';
-        }, 40);
+        $this->events->addAction(
+            'my_great_action',
+            function () {
+                echo 'Action Fired, Baby!';
+            },
+            40
+        );
 
         $this->assertEquals($this->events->getAction()->getListeners()[0]['priority'], 8);
         $this->assertEquals($this->events->getAction()->getListeners()[1]['priority'], 12);
@@ -139,7 +170,8 @@ class ActionTest extends TestCase
         }
         $this->assertEquals($count, 1);
 
-        // check that the action with priority 10 still exists in the collection (only the action with priority 30 should've been removed)
+        // check that the action with priority 10 still exists in the collection
+        // (only the action with priority 30 should've been removed)
         $priority = 0;
         foreach ($this->events->getAction()->getListeners() as $listner) {
             if ($listner['hook'] == 'my_great_action') {
@@ -147,8 +179,6 @@ class ActionTest extends TestCase
             }
         }
         $this->assertEquals($priority, 10);
-
-
     }
 
     /**

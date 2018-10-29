@@ -49,9 +49,8 @@ abstract class Event
     {
         if ($this->listeners) {
             $listeners = $this->listeners;
-            foreach($this->listeners as $key => $value) {
-                if (
-                    $value['hook'] == $hook &&
+            foreach ($this->listeners as $key => $value) {
+                if ($value['hook'] == $hook &&
                     $value['callback'] == $callback &&
                     $value['priority'] == $priority
                 ) {
@@ -72,7 +71,7 @@ abstract class Event
         if ($this->listeners) {
             if ($hook) {
                 $listeners = $this->listeners;
-                foreach($this->listeners as $key => $value) {
+                foreach ($this->listeners as $key => $value) {
                     if ($value['hook'] == $hook) {
                         unset($listeners[$key]);
                     }
@@ -93,9 +92,12 @@ abstract class Event
     {
         $listeners = $this->listeners;
 
-        usort($listeners, function($a, $b) {
-            return $a['priority'] - $b['priority'];
-        });
+        usort(
+            $listeners,
+            function ($a, $b) {
+                return ($a['priority'] - $b['priority']);
+            }
+        );
 
         return $listeners;
     }

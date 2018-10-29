@@ -18,9 +18,12 @@ class FilterTest extends TestCase
      */
     public function testCanHookCallable()
     {
-        $this->events->addFilter('my_awesome_filter', function ($value) {
-            return $value.' Filtered';
-        });
+        $this->events->addFilter(
+            'my_awesome_filter',
+            function ($value) {
+                return $value.' Filtered';
+            }
+        );
         $this->assertEquals($this->events->runFilter('my_awesome_filter', 'Value Was'), 'Value Was Filtered');
     }
 
@@ -57,15 +60,26 @@ class FilterTest extends TestCase
      */
     public function testHookFiresWhenTwoListnersHaveSamePriority()
     {
-        $this->events->addFilter('my_great_filter', function ($value) {
-            return $value.' Once';
-        }, 20);
+        $this->events->addFilter(
+            'my_great_filter',
+            function ($value) {
+                return $value.' Once';
+            },
+            20
+        );
 
-        $this->events->addFilter('my_great_filter', function ($value) {
-            return $value.' And Twice';
-        }, 20);
+        $this->events->addFilter(
+            'my_great_filter',
+            function ($value) {
+                return $value.' And Twice';
+            },
+            20
+        );
 
-        $this->assertEquals($this->events->runFilter('my_great_filter', 'I Was Filtered'), 'I Was Filtered Once And Twice');
+        $this->assertEquals(
+            $this->events->runFilter('my_great_filter', 'I Was Filtered'),
+            'I Was Filtered Once And Twice'
+        );
     }
 
     /**
@@ -73,21 +87,37 @@ class FilterTest extends TestCase
      */
     public function testsListnersAreSortedByPriority()
     {
-        $this->events->addFilter('my_awesome_filter', function ($value) {
-            return $value.' Filtered';
-        }, 20);
+        $this->events->addFilter(
+            'my_awesome_filter',
+            function ($value) {
+                return $value.' Filtered';
+            },
+            20
+        );
 
-        $this->events->addFilter('my_awesome_filter', function ($value) {
-            return $value.' Filtered';
-        }, 8);
+        $this->events->addFilter(
+            'my_awesome_filter',
+            function ($value) {
+                return $value.' Filtered';
+            },
+            8
+        );
 
-        $this->events->addFilter('my_awesome_filter', function ($value) {
-            return $value.' Filtered';
-        }, 12);
+        $this->events->addFilter(
+            'my_awesome_filter',
+            function ($value) {
+                return $value.' Filtered';
+            },
+            12
+        );
 
-        $this->events->addFilter('my_awesome_filter', function ($value) {
-            return $value.' Filtered';
-        }, 40);
+        $this->events->addFilter(
+            'my_awesome_filter',
+            function ($value) {
+                return $value.' Filtered';
+            },
+            40
+        );
 
         $this->assertEquals($this->events->getFilter()->getListeners()[0]['priority'], 8);
         $this->assertEquals($this->events->getFilter()->getListeners()[1]['priority'], 12);

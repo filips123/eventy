@@ -178,10 +178,9 @@ class Events
      */
     protected function createHook($args)
     {
-        return (object)[
+        return (object) [
             'name' => $args[0],
-            'args' => array_values(array_slice($args, 1))
+            'args' => array_values(array_slice($args, 1)),
         ];
     }
-
 }

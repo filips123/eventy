@@ -19,7 +19,7 @@ class Action extends Event
         if ($this->getListeners()) {
             $listeners = $this->getListeners();
 
-            foreach($listeners as $listener) {
+            foreach ($listeners as $listener) {
                 if ($listener['hook'] == $action) {
                     $parameters = [];
 
