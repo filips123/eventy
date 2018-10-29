@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+    <title>API Documentation for Eventy</title>
+
+    <parser>
+        <target>./build/api-cache/</target>
+    </parser>
+
+    <transformer>
+        <target>./build/docs/</target>
+    </transformer>
+
+    <files>
+        <directory>.</directory>
+        <ignore>*/build/*</ignore>
+        <ignore>*/dist/*</ignore>
+        <ignore>*/vendor/*</ignore>
+        <ignore>*/tests/*</ignore>
+        <ignore>*/bin/*</ignore>
+    </files>
+</phpdoc>
