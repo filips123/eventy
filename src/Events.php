@@ -144,9 +144,9 @@ class Events
      *
      * @return void
      */
-    public function runAction(...$args)
+    public function runAction()
     {
-        $hook = $this->createHook($args);
+        $hook = $this->createHook(func_get_args());
         $this->action->fire($hook->name, $hook->args);
     }
 
@@ -160,9 +160,9 @@ class Events
      *
      * @return mixed
      */
-    public function runFilter(...$args)
+    public function runFilter()
     {
-        $hook = $this->createHook($args);
+        $hook = $this->createHook(func_get_args());
         return $this->filter->fire($hook->name, $hook->args);
     }
 

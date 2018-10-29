@@ -95,7 +95,13 @@ abstract class Event
         usort(
             $listeners,
             function ($a, $b) {
-                return ($a['priority'] - $b['priority']);
+                // @codeCoverageIgnoreStart
+                if (version_compare(PHP_VERSION, '7.0.0', '<')) {
+                    return ($b['priority'] - $a['priority']);
+                } else {
+                    return ($a['priority'] - $b['priority']);
+                }
+                // @codeCoverageIgnoreEnd
             }
         );
 
@@ -107,7 +113,7 @@ abstract class Event
      *
      * @param mixed $callback Callback
      *
-     * @return callable A closure, an array if "class@method" or a string if "function_name"
+     * @return callable A closure
      *
      * @throws \Exception
      */

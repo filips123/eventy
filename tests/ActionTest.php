@@ -58,8 +58,8 @@ class ActionTest extends TestCase
     {
         $this->events->addAction(
             'my_great_action',
-            function (...$args) {
-                echo 'Hello, ' . $args[0] . '!';
+            function () {
+                echo 'Hello, ' . func_get_args()[0] . '!';
             },
             20
         );
