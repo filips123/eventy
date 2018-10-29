@@ -40,7 +40,7 @@ EventyClassic requires *PHP 5.4.0* or higher.
 
 ### Using Composer
 
-The reccomended way to install EventyClassic is with [Composer][https://getcomposer.org/], dependency manager for PHP.
+The reccomended way to install EventyClassic is with [Composer](https://getcomposer.org/), dependency manager for PHP.
 
 ```bash
 composer require filips123/eventy
